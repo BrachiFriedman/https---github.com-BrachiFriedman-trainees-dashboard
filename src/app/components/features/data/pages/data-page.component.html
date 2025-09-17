@@ -1,0 +1,91 @@
+<h2>טבלת תוצאות מתאמנים</h2>
+
+<div class="actions">
+  <button mat-raised-button color="primary" (click)="addTrainee()">הוסף</button>
+</div>
+
+<mat-form-field>
+  <mat-label>סינון</mat-label>
+  <input matInput [(ngModel)]="filterValue" placeholder="חפש לפי שם, מקצוע, תאריך...">
+</mat-form-field>
+
+<table mat-table [dataSource]="filteredData" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> שם </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="subject">
+    <th mat-header-cell *matHeaderCellDef> מקצוע </th>
+    <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef> תאריך </th>
+    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="grade">
+    <th mat-header-cell *matHeaderCellDef> ציון </th>
+    <td mat-cell *matCellDef="let element"> {{element.grade}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef> ערוך </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" (click)="selectTrainee(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef> מחק </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="warn" (click)="deleteTrainee(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+<tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectTrainee(row)"
+  [class.selected]="selectedTrainee?.id === row.id"></tr>
+<div *ngIf="selectedTrainee" class="details-panel">
+  <h3>עריכת מתאמן</h3>
+  <form (ngSubmit)="saveTrainee()">
+    <mat-form-field appearance="outline">
+      <mat-label>שם</mat-label>
+      <input matInput [(ngModel)]="selectedTrainee.name" name="name" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>מקצוע</mat-label>
+      <input matInput [(ngModel)]="selectedTrainee.subject" name="subject" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>תאריך</mat-label>
+      <input matInput [(ngModel)]="selectedTrainee.date" name="date" type="date" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>ציון</mat-label>
+      <input matInput [(ngModel)]="selectedTrainee.grade" name="grade" type="number" required>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" type="submit">שמור</button>
+  </form>
+</div>
+
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

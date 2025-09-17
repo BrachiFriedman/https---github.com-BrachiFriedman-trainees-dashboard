@@ -1,0 +1,24 @@
+<style>
+  .main {
+    padding: 5px;
+    direction: rtl;
+  }
+
+  nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  nav a.active {
+    color: darkblue;
+  }
+</style>
+
+<main class="main">
+  <nav>
+    <a routerLink="/data" routerLinkActive="active">נתונים</a> |
+    <a routerLink="/analysis" routerLinkActive="active">ניתוח</a> |
+    <a routerLink="/monitor" routerLinkActive="active">מעקב</a>
+  </nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,72 @@
+<h2>ניתוח תוצאות</h2>
+
+<div class="filters">
+  <mat-form-field appearance="fill" class="filter">
+    <mat-label>בחר מתאמנים</mat-label>
+    <mat-select multiple [(ngModel)]="selectedIds" (selectionChange)="onFilterChange()">
+      <mat-option *ngFor="let id of allIds" [value]="id">{{ id }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="filter">
+    <mat-label>בחר מקצועות</mat-label>
+    <mat-select multiple [(ngModel)]="selectedSubjects" (selectionChange)="onFilterChange()">
+      <mat-option *ngFor="let subject of allSubjects" [value]="subject">{{ subject }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+<!--גרף ראשון-->
+<div class="charts-container">
+  <div class="chart-box" *ngIf="visibleCharts[0]" (drop)="onDrop(0)" (dragover)="onDragOver($event)">
+    <h3>{{ visibleCharts[0].title }}</h3>
+
+    <canvas baseChart *ngIf="visibleCharts[0].id === 1"
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [type]="barChartType">
+    </canvas>
+
+    <canvas baseChart *ngIf="visibleCharts[0].id === 2"
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            [type]="lineChartType">
+    </canvas>
+
+    <canvas baseChart *ngIf="visibleCharts[0].id === 3"
+            [data]="averageChartData"
+            [options]="barChartOptions"
+            [type]="barChartType">
+    </canvas>
+  </div>
+
+  <!-- גרף שני -->
+  <div class="chart-box" *ngIf="visibleCharts[1]" (drop)="onDrop(1)" (dragover)="onDragOver($event)">
+    <h3>{{ visibleCharts[1].title }}</h3>
+
+    <canvas baseChart *ngIf="visibleCharts[1].id === 1"
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [type]="barChartType">
+    </canvas>
+
+    <canvas baseChart *ngIf="visibleCharts[1].id === 2"
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            [type]="lineChartType">
+    </canvas>
+
+    <canvas baseChart *ngIf="visibleCharts[1].id === 3"
+            [data]="averageChartData"
+            [options]="barChartOptions"
+            [type]="barChartType">
+    </canvas>
+  </div>
+
+</div>
+
+<!-- כפתור גרף מוסתר -->
+<div class="hidden-chart" *ngIf="hiddenChart" draggable="true" (dragstart)="onDragStart()">
+  <span>{{ hiddenChart.title }}</span>
+</div>
+
